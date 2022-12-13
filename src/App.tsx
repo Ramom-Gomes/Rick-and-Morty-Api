@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {RickandMorty, Next} from './types/RickandMorty';
+import styles from './App.module.css';
 
 function App() {
   let [Pessoas, SetPessoas] = useState<RickandMorty[]>([]);
@@ -12,7 +13,6 @@ function App() {
     let json = await resposta.json();
     SetPessoas(json.results);
     SetNext(json.info)
-    console.log(Next)
   }
 
   const LoadNext = () => {
@@ -28,20 +28,34 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <button onClick={LoadPrev}>prev</button>
-      <button onClick={LoadNext}>next</button>
-      {Pessoas.map((item, index) => (
-        <div key={index}>
-          <div>
-            <img src={item.image} />
-            <div>{item.name}</div>
-            <div>{item.species}</div>
-            <div>{item.status}</div>
-            <div>{item.location.name}</div>
+    <div className={styles.main}>
+      <h1 className={styles.titulo}>RICK AND MORTY</h1>
+      <div className={styles.botao}>
+        <button className={styles.botao2} onClick={LoadPrev}>Voltar</button>
+        <button className={styles.botao2} onClick={LoadNext}>Próximo</button>
+      </div>
+      <div className={styles.personagem}>
+        {Pessoas.map((item, index) => (
+          <div className={styles.personagem2} key={index}>
+            <div className={styles.imagem}>
+              <img src={item.image} height={250}/>
+            </div>
+            <div>
+              <div className={styles.nome} >{item.name}</div>
+              <div className={styles.status} >Status: {item.status}</div>
+              <div className={styles.especie} >Especie: {item.species}</div>
+              <div>
+                <p className={styles.LocalInfo}>Ultimo locas visto:</p>
+                <div className={styles.Local} >{item.location.name}</div>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+      <div className={styles.botao3}>
+        <button className={styles.botao2} onClick={LoadPrev}>Voltar</button>
+        <button className={styles.botao2} onClick={LoadNext}>Próximo</button>
+      </div>
     </div>
   )
 }
